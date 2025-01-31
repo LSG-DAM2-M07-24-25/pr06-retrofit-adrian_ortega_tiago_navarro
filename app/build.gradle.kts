@@ -66,6 +66,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    //NAVIGATION
+    implementation ("androidx.navigation:navigation-compose:2.8.5")
     //LIVEDATA
     implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
     //RETROFIT
