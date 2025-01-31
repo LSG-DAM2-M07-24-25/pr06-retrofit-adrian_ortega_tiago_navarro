@@ -18,6 +18,11 @@ fun LazyColumnGames(modifier: Modifier){
             .padding(vertical = 30.dp)
             .fillMaxHeight()
         ) {
+        items(getAllGames()) { game ->
+            DetailView(game = game){
+                navController.navigate(Routes.DetailScreen.createRoute(game.name))
+            }
 
+        }
     }
 }
