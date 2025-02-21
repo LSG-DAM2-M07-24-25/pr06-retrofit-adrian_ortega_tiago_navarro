@@ -17,7 +17,7 @@ fun NavHost(modifier: Modifier, navController: NavHostController) {
         startDestination = Routes.LazyColumnGames.route
     ) {
         composable(Routes.LazyColumnGames.route) {
-            LazyColumnGames(modifier, navController)
+            LazyColumnGames(navController)
         }
 
         composable(
@@ -28,8 +28,7 @@ fun NavHost(modifier: Modifier, navController: NavHostController) {
         ) { backStackEntry ->
             DetailView(
                 navController,
-                backStackEntry.arguments?.getString("gameName").orEmpty(),
-                modifier =
+                backStackEntry.arguments?.getString("gameName").orEmpty()
             )
         }
     }

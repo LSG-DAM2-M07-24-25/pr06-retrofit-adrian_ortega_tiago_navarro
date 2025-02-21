@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
 import com.example.pr06_retrofit_adrian_tiago.nav.Routes
-import com.example.pr06_retrofit_adrian_tiago.viewmodel.ViewModel
+import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel: ViewModel){
+fun FavouriteScreen(modifier: Modifier, navController: NavController, myViewModel: MyViewModel){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -62,4 +62,3 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel:
         }
 
     }
-}
