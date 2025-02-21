@@ -25,10 +25,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPIItem
 
-@OptIn
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DetailView(
     navController: NavController,
@@ -48,13 +50,11 @@ fun DetailView(
             verticalArrangement = Arrangement.Center
         ) {
             if (game.title != null) {
-                Image(
-                    painter = painterResource(id = game.thumbnail),
+                GlideImage(
+                    model = game.thumbnail,
                     contentDescription = game.short_description,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(380.dp)
-                        .clip(CircleShape)
+                    modifier = Modifier.size(100.dp)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
