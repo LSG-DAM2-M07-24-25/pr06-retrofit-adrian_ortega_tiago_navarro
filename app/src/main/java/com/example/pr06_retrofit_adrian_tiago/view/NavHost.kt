@@ -29,7 +29,7 @@ fun NavHost(modifier: Modifier, navController: NavHostController) {
             DetailView(
                 navController,
                 backStackEntry.arguments?.getString("gameName").orEmpty(),
-                modifier
+                modifier =
             )
         }
     }
