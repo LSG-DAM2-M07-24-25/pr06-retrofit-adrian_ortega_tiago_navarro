@@ -36,7 +36,7 @@ fun LazyColumnGames(modifier: Modifier, navController: NavController, myViewMode
         }
     } else {
         LazyColumn {
-            items(juegos.games) {
+            items(juegos.) {
                 GameItem(game = it)
             }
         }
