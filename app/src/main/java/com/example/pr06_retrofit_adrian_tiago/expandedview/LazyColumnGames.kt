@@ -1,4 +1,4 @@
-package com.example.pr06_retrofit_adrian_tiago.mediumview
+package com.example.pr06_retrofit_adrian_tiago.expandedview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
