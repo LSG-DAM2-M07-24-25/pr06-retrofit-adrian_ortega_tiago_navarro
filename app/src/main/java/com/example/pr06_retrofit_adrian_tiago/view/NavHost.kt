@@ -9,15 +9,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 
 @Composable
-fun NavHost(modifier: Modifier, navController: NavHostController) {
+fun NavHost(modifier: Modifier, navController: NavHostController, myViewModel: MyViewModel) {
     NavHost(
         navController = navController,
         startDestination = Routes.LazyColumnGames.route
     ) {
         composable(Routes.LazyColumnGames.route) {
-            LazyColumnGames(modifier, navController)
+            LazyColumnGames(navController, myViewModel)
         }
 
         composable(
@@ -28,8 +29,7 @@ fun NavHost(modifier: Modifier, navController: NavHostController) {
         ) { backStackEntry ->
             DetailView(
                 navController,
-                backStackEntry.arguments?.getString("gameName").orEmpty(),
-                modifier =
+                backStackEntry.arguments?.getString("gameName").orEmpty()
             )
         }
     }

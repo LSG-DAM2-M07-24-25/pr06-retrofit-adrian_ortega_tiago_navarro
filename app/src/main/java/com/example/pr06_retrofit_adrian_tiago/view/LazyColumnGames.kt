@@ -15,11 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
+import com.example.pr06_retrofit_adrian_tiago.model.DatosAPIItem
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 
 
 @Composable
-fun LazyColumnGames(modifier: Modifier, navController: NavController, myViewModel: MyViewModel){
+fun LazyColumnGames(navController: NavController, myViewModel: MyViewModel){
     val showLoading: Boolean by myViewModel.loading.observeAsState(true)
     val juegos: DatosAPI by myViewModel.games.observeAsState(DatosAPI(emptyList()))
     myViewModel.getGames()
@@ -36,7 +37,7 @@ fun LazyColumnGames(modifier: Modifier, navController: NavController, myViewMode
         }
     } else {
         LazyColumn {
-            items(juegos.games) {
+            items(juegos.juegos) {
                 GameItem(game = it)
             }
         }
