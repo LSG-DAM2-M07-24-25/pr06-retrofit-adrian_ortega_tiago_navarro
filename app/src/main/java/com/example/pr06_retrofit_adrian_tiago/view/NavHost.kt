@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 
 @Composable
 fun NavHost(modifier: Modifier, navController: NavHostController) {
@@ -29,7 +30,8 @@ fun NavHost(modifier: Modifier, navController: NavHostController) {
             DetailView(
                 navController,
                 backStackEntry.arguments?.getString("gameName").orEmpty(),
-                modifier =
+                modifier = modifier,
+                MyViewModel
             )
         }
     }

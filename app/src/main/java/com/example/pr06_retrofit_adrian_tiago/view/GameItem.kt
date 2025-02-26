@@ -51,6 +51,7 @@ fun GameItem(game: DatosAPIItem) {
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center, modifier = Modifier.fillMaxSize()
             )
+            //TODO Transformar la primera letra a mayúscula si la api entrega los titulos en minuscula
         }
         }
 }

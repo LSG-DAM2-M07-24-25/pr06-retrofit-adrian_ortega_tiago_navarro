@@ -5,10 +5,12 @@ import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.pr06_retrofit_adrian_tiago.model.DatosAPIItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class MyViewModel: ViewModel() {
 

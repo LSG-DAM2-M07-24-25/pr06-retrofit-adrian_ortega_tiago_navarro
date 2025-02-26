@@ -3,9 +3,7 @@ package com.example.pr06_retrofit_adrian_tiago.view
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,5 +22,6 @@ fun LazyColumnGames(modifier: Modifier){
             }
 
         }
+
     }
 }
