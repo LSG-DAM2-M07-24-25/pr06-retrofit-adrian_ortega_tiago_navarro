@@ -31,21 +31,6 @@ fun LazyColumnGames(navController: NavController, myViewModel: MyViewModel){
     val juegos: DatosAPI by myViewModel.games.observeAsState(DatosAPI(emptyList()))
     myViewModel.getGames()
 
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier
-            .padding(vertical = 30.dp)
-            .fillMaxHeight()
-    ){
-
-        item(){
-            Button(onClick = {
-                navController.navigate(Routes.FavourteList.route)
-            }) {
-                Text("Favoritos")
-            }
-        }
-
-    }
     if (showLoading) {
         Row(
             modifier = Modifier.fillMaxSize(),
