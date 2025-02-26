@@ -1,6 +1,7 @@
 package com.example.pr06_retrofit_adrian_tiago.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,8 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.IntSize
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.pr06_retrofit_adrian_tiago.R
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPIItem
 
@@ -35,9 +40,12 @@ import com.example.pr06_retrofit_adrian_tiago.model.DatosAPIItem
 fun DetailView(
     navController: NavController,
     game: DatosAPIItem,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     MyViewModel: MyViewModel
 ) {
+    //val allGames by MyViewModel.getGames().observeAsState(mutableListOf())
+    val isFavourite by MyViewModel.isFavourite.observeAsState(false)
+    var isLiking by remember { mutableStateOf(false)}
 
     Box(
         modifier = Modifier
@@ -55,6 +63,27 @@ fun DetailView(
                     contentDescription = game.short_description,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.size(100.dp)
+                )
+                Image(
+                    painter = painterResource(id = if (isFavourite) R.drawable.corazonrojo else R.drawable.corazongris),
+                    contentDescription = "Favourite",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.TopEnd)
+                        .clickable(enabled = !isFavourite) {
+                            isLiking = true
+                            //TODO VARIABLES EN ROJO PORQUE LOS METOFOS NO ESTAN EN EL MODEL O EL VIEMODEL TODAVIA
+                            val gameToUpdate = game.copy(isFavourite = !isFavourite)
+                            if (!isFavourite) {
+                                MyViewModel.likeGame(gameToUpdate) {
+                                    isLiking = false
+                                }
+                            } else {
+                                MyViewModel.freeGame(gameToUpdate) {
+                                    isLiking = false
+                                }
+                            }
+                        }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -93,7 +122,7 @@ fun DetailView(
 
             Button(
                 onClick =
-                {   // Quan es cliqui el botó anirà a la pàgina anterior
+                {
                     navController.popBackStack()
                 },
                 modifier = Modifier.padding(top = 20.dp)

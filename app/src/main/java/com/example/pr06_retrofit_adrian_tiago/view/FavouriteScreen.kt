@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
 import com.example.pr06_retrofit_adrian_tiago.nav.Routes
+import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,9 +31,8 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel:
             .fillMaxSize()
             .background(Color.White)
     ){
-        /*val showLoading: Boolean by ViewModel.loading.observeAsState(true)
-        val favGame: MutableList<Pokemon> by roomViewModel.favorites.observeAsState(mutableListOf())
-        ViewModel.getFavorites()
+        val showLoading: Boolean by ViewModel.loading.observeAsState(true)
+       // val favGame: MutableList<DatosAPI> by MyViewModel.favorites.observeAsState(mutableListOf()) ViewModel.getFavorites()
 
         if(showLoading) {
             CircularProgressIndicator(
@@ -43,7 +43,7 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel:
             LazyColumn() {
                 items(favGame) { game ->
                         GameItem(game) {
-                        navController.navigate(Routes.DetailScreen.createRoute(game.name))
+                        navController.navigate(Routes.DetailView.createRoute(game.))
                     }
                 }
 
@@ -58,7 +58,6 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel:
                     }
                 }
             }
-         */
         }
 
     }
