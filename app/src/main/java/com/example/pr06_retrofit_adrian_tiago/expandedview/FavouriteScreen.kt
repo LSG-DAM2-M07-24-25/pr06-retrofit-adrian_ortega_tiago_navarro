@@ -1,4 +1,4 @@
-package com.example.pr06_retrofit_adrian_tiago.view
+package com.example.pr06_retrofit_adrian_tiago.expandedview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,22 +20,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
 import com.example.pr06_retrofit_adrian_tiago.nav.Routes
-import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
-<<<<<<< HEAD
-=======
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.ViewModel
->>>>>>> 0a120457c253f815f89fb8c229fd76b982d8f559
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavouriteScreen(modifier: Modifier, navController: NavController, myViewModel: MyViewModel){
+fun FavouriteScreen(modifier: Modifier, navController: NavController, ViewModel: ViewModel){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ){
-        val showLoading: Boolean by ViewModel.loading.observeAsState(true)
-       // val favGame: MutableList<DatosAPI> by MyViewModel.favorites.observeAsState(mutableListOf()) ViewModel.getFavorites()
+        /*val showLoading: Boolean by ViewModel.loading.observeAsState(true)
+        val favGame: MutableList<Pokemon> by roomViewModel.favorites.observeAsState(mutableListOf())
+        ViewModel.getFavorites()
 
         if(showLoading) {
             CircularProgressIndicator(
@@ -46,7 +43,7 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, myViewMode
             LazyColumn() {
                 items(favGame) { game ->
                         GameItem(game) {
-                        navController.navigate(Routes.DetailView.createRoute(game.))
+                        navController.navigate(Routes.DetailScreen.createRoute(game.name))
                     }
                 }
 
@@ -61,6 +58,8 @@ fun FavouriteScreen(modifier: Modifier, navController: NavController, myViewMode
                     }
                 }
             }
+         */
         }
 
     }
+}

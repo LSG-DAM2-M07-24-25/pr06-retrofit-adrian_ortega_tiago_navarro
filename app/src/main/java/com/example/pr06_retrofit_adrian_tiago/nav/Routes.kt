@@ -6,4 +6,6 @@ sealed class Routes(val route: String) {
     object DetailView: Routes("DetailView/{gameName") {
         fun createRoute(gameName: String) = "DetailView/$gameName"
     }
+
+    object FavourteList: Routes("FavouriteScreen")
 }

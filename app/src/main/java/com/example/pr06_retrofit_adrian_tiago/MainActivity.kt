@@ -34,10 +34,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     PR06_Retrofit_Adrian_TiagoTheme {
         Greeting("Android")
     }
 }
+
+ */

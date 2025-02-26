@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.absoluteValue
 
+
 class MyViewModel: ViewModel() {
 
     private val repository = Repository()

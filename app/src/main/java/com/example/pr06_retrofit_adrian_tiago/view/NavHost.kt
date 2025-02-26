@@ -29,7 +29,13 @@ fun NavHost(modifier: Modifier, navController: NavHostController, myViewModel: M
         ) { backStackEntry ->
             DetailView(
                 navController,
+<<<<<<< HEAD
                 backStackEntry.arguments?.getString("gameName").orEmpty()
+=======
+                backStackEntry.arguments?.getString("gameName").orEmpty(),
+                modifier = modifier,
+                MyViewModel
+>>>>>>> 0a120457c253f815f89fb8c229fd76b982d8f559
             )
         }
     }
