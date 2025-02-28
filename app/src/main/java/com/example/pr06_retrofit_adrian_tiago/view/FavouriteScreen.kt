@@ -21,10 +21,6 @@ import androidx.navigation.NavController
 import com.example.pr06_retrofit_adrian_tiago.model.DatosAPI
 import com.example.pr06_retrofit_adrian_tiago.nav.Routes
 import com.example.pr06_retrofit_adrian_tiago.viewmodel.MyViewModel
-<<<<<<< HEAD
-=======
-import com.example.pr06_retrofit_adrian_tiago.viewmodel.ViewModel
->>>>>>> 0a120457c253f815f89fb8c229fd76b982d8f559
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -75,13 +75,12 @@ fun DetailView(
                             //TODO VARIABLES EN ROJO PORQUE LOS METOFOS NO ESTAN EN EL MODEL O EL VIEMODEL TODAVIA
                             val gameToUpdate = game.copy(isFavourite = !isFavourite)
                             if (!isFavourite) {
-                                MyViewModel.likeGame(gameToUpdate) {
-                                    isLiking = false
-                                }
+                                MyViewModel.addFavourite(gameToUpdate)
+                                isLiking = false
                             } else {
-                                MyViewModel.freeGame(gameToUpdate) {
-                                    isLiking = false
-                                }
+                                MyViewModel.removeFavourite(gameToUpdate)
+                                isLiking = false
+
                             }
                         }
                 )
