@@ -14,5 +14,5 @@ data class Juego(
     val short_description: String,
     val thumbnail: String,
     val title: String,
-    val is_favourite: Boolean = false
+    var is_favourite: Boolean = false
 )
