@@ -71,7 +71,7 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp)
+            .padding(top = 64.dp, bottom = 32.dp, start = 32.dp, end = 32.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Row(
@@ -273,20 +273,23 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ) {
                     Text(
                         text = "Genero: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.genre,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Plataform: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.platform,
@@ -299,7 +302,8 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ) {
                     Text(
                         text = "Desarrollador: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.developer,
@@ -312,7 +316,8 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ) {
                     Text(
                         text = "Publisher: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.publisher,
@@ -325,7 +330,8 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ) {
                     Text(
                         text = "Lanzamiento: ",
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.release_date,
@@ -338,9 +344,11 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ){
                     Text(
                         text = "Descripcion: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                 }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
