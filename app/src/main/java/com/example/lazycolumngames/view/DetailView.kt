@@ -32,6 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -110,7 +112,7 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(64.dp),
+                    .padding(32.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 Row(
@@ -119,75 +121,90 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
                 ) {
                     Text(
                         text = "Género: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.genre,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Plataform: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.platform,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Desarrollador: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.developer,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Publisher: ",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.publisher,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Lanzamiento: ",
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = it.release_date,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = "Descripcion: ",
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = it.short_description,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Spacer(Modifier.height(20.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                        Text(
+                            text = "Descripcion:",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold
+                            )
+                        Text(
+                            text = it.short_description,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                }
+
 
             }
         } ?: Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
