@@ -199,10 +199,16 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                             )
-                        Text(
-                            text = it.short_description,
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
+                }
+                Spacer(Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        text = it.short_description,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 }
 
 
@@ -326,16 +332,25 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = "Descripcion: ",
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = it.short_description,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        text = "Descripcion: ",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        text = it.short_description,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
             }
         }
 
