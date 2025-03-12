@@ -1,5 +1,6 @@
 package com.example.lazycolumngames.view
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,7 +72,7 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 64.dp, bottom = 32.dp, start = 32.dp, end = 32.dp)
+            .padding(top = 64.dp, bottom = 24.dp, start = 32.dp, end = 32.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Row(
@@ -281,7 +282,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
-
+                Spacer(Modifier.height(15.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -296,6 +297,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(15.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -310,6 +312,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(15.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -324,6 +327,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(15.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -338,6 +342,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
+                Spacer(Modifier.height(15.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -348,7 +353,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                         fontWeight = FontWeight.Bold
                     )
                 }
-
+                Spacer(Modifier.height(7.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically

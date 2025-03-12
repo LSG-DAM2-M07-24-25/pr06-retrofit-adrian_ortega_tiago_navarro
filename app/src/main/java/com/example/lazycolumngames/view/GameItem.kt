@@ -51,7 +51,7 @@ fun GameItem(game: Juego, isTablet: Boolean, onClick: () -> Unit) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(140.dp)
+                        .height(200.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
 
@@ -59,7 +59,7 @@ fun GameItem(game: Juego, isTablet: Boolean, onClick: () -> Unit) {
 
                 Text(
                     text = game.title,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -68,9 +68,19 @@ fun GameItem(game: Juego, isTablet: Boolean, onClick: () -> Unit) {
 
                 Text(
                     text = game.genre,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = game.short_description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp),
+                    color = Color.Gray
                 )
             }
         } else {

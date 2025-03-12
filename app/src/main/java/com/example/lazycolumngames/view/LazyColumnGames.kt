@@ -47,7 +47,7 @@ fun LazyColumnGames(modifier: Modifier, myNavController: NavController, myViewMo
         }
     } else {
         if (isTablet) {
-            TabletGamesGrid(modifier, myNavController, juegos)
+            TabletGamesList(modifier, myNavController, juegos)
         } else {
             PhoneGamesList(modifier, myNavController, juegos)
         }
@@ -71,13 +71,11 @@ fun PhoneGamesList(modifier: Modifier, myNavController: NavController, juegos: L
 }
 
 @Composable
-fun TabletGamesGrid(modifier: Modifier, myNavController: NavController, juegos: List<Juego>) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 200.dp),
+fun TabletGamesList(modifier: Modifier, myNavController: NavController, juegos: List<Juego>) {
+    LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(juegos) { juego ->
             GameItem(game = juego, isTablet = true) {
