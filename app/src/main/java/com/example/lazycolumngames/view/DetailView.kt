@@ -2,6 +2,7 @@ package com.example.lazycolumngames.view
 
 import android.widget.Space
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,7 +55,19 @@ fun DetailView(gameJson: String?, myViewModel: MyViewModel) {
     }
 
     val game by myViewModel.game.collectAsState()
+    val games: List<Juego> by myViewModel.games.observeAsState(emptyList())
+    val gameRoom = games.find { it.title == gameJson }
+    myViewModel.getFavourtie()
+    val favourites: MutableList<Juego> by myViewModel.liked.observeAsState(mutableListOf())
+
+    val isLikingGame by myViewModel.isLikingGame.observeAsState(false)
     val configuration = LocalConfiguration.current
+
+    LaunchedEffect(gameRoom) {
+        gameRoom?.let {
+            myViewModel.isLiked(it)
+        }
+    }
 
     when {
         configuration.screenWidthDp < 600 -> {
@@ -69,6 +83,9 @@ fun DetailView(gameJson: String?, myViewModel: MyViewModel) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
+    val isLiked by myViewModel.isLiked.observeAsState(false)
+    val isLikingGame by myViewModel.isLikingGame.observeAsState(false)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,16 +100,36 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
                 text = game?.title ?: "Detalles",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
-
-
             )
-            //Spacer(Modifier.height(40.dp))
-            IconButton(onClick = { myViewModel.toggleFavourite() }, ) {
-                Icon(
-                    imageVector = if (game?.is_favourite == true) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                    contentDescription = "Favourite",
-                    tint = if (game?.is_favourite == true) Color.Red else Color.Gray
-                )
+
+            game?.let { currentGame ->
+                // IconButton para darle like o dislike
+                IconButton(onClick = {
+                    // Cambiar el estado de "liking"
+                    myViewModel.toggleIsLiking()
+                    val gameToUpdate = currentGame.copy(is_favourite = !currentGame.is_favourite)
+
+                    // Dependiendo si ya está marcado como "liked", hacer like o dislike
+                    if (!isLiked) {
+                        myViewModel.likeGame(gameToUpdate) {
+                            myViewModel.toggleIsLiking() // Resetear el estado de "liking" después de la operación
+                        }
+                    } else {
+                        myViewModel.dislikeGame(gameToUpdate) {
+                            myViewModel.toggleIsLiking() // Resetear el estado de "liking" después de la operación
+                        }
+                    }
+                }) {
+                    // Aquí cambiamos el ícono dependiendo si está "liked"
+                    Icon(
+                        imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                        contentDescription = "Favourite",
+                        tint = if (isLiked) Color.Red else Color.Gray
+                    )
+                }
+
+                // Mostrar un indicador de carga mientras se está "liking" o "disliking"
+
             }
         }
 
@@ -119,103 +156,24 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
                     .padding(32.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Género: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.genre,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                InfoRow("Género:", it.genre)
+                InfoRow("Plataforma:", it.platform)
+                InfoRow("Desarrollador:", it.developer)
+                InfoRow("Publisher:", it.publisher)
+                InfoRow("Lanzamiento:", it.release_date)
+
                 Spacer(Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Plataform: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.platform,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Desarrollador: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.developer,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Publisher: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.publisher,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Lanzamiento: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.release_date,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                        Text(
-                            text = "Descripcion:",
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.Bold
-                            )
-                }
+
+                Text(
+                    text = "Descripción:",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
+                )
                 Spacer(Modifier.height(6.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        text = it.short_description,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-
-
+                Text(
+                    text = it.short_description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         } ?: Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(color = Color.Yellow)
@@ -223,14 +181,56 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
     }
 }
 
+
+
+@Composable
+fun InfoRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "$label ",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Composable
+fun GameDetailItem(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = value, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
+    // Variables para manejar el estado de "liked" y "isLikingGame"
+    val isLiked by myViewModel.isLiked.observeAsState(false)
+    val isLikingGame by myViewModel.isLikingGame.observeAsState(false)
+
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(32.dp)
     ) {
+        // Imagen del juego a la izquierda
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -247,6 +247,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
 
         Spacer(modifier = Modifier.width(32.dp))
 
+        // Detalles del juego a la derecha
         Column(
             modifier = Modifier
                 .weight(2f)
@@ -254,124 +255,90 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.Start
         ) {
+            // Título y botón de "like"
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(end = 32.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = game?.title ?: "Detalles", fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontWeight = FontWeight.Bold)
-                IconButton(onClick = { myViewModel.toggleFavourite() }) {
-                    Icon(
-                        imageVector = if (game?.is_favourite == true) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                        contentDescription = "Favourite",
-                        //Modifier.padding(bottom = 15.dp),
-                        tint = if (game?.is_favourite == true) Color.Red else Color.Gray
-                    )
+                Text(
+                    text = game?.title ?: "Detalles",
+                    fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                    fontWeight = FontWeight.Bold
+                )
+
+                // Aquí se maneja el "like" o "dislike"
+                game?.let { currentGame ->
+                    IconButton(onClick = {
+                        // Cambiar el estado de "liking"
+                        myViewModel.toggleIsLiking()
+                        val gameToUpdate = currentGame.copy(is_favourite = !currentGame.is_favourite)
+
+                        // Dependiendo de si el juego ya está "liked", añadir o quitar
+                        if (!isLiked) {
+                            myViewModel.likeGame(gameToUpdate) {
+                                myViewModel.toggleIsLiking() // Resetear el estado de "liking" después de la operación
+                            }
+                        } else {
+                            myViewModel.dislikeGame(gameToUpdate) {
+                                myViewModel.toggleIsLiking() // Resetear el estado de "liking" después de la operación
+                            }
+                        }
+                    }) {
+                        // Cambiar el ícono de favorito según el estado
+                        Icon(
+                            imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                            contentDescription = "Favourite",
+                            tint = if (isLiked) Color.Red else Color.Gray
+                        )
+                    }
+
+                    // Mostrar un indicador de carga mientras se está procesando el like/dislike
+                    if (isLikingGame) {
+                        CircularProgressIndicator(color = Color.Yellow)
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Información adicional sobre el juego
             game?.let {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Genero: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.genre,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                InfoRow(label = "Género:", value = it.genre)
                 Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Plataform: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.platform,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Desarrollador: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.developer,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Publisher: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.publisher,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Lanzamiento: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = it.release_date,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        text = "Description: ",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(Modifier.height(7.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        text = it.short_description,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
 
+                InfoRow(label = "Plataforma:", value = it.platform)
+                Spacer(Modifier.height(15.dp))
+
+                InfoRow(label = "Desarrollador:", value = it.developer)
+                Spacer(Modifier.height(15.dp))
+
+                InfoRow(label = "Publisher:", value = it.publisher)
+                Spacer(Modifier.height(15.dp))
+
+                InfoRow(label = "Lanzamiento:", value = it.release_date)
+                Spacer(Modifier.height(15.dp))
+
+                // Descripción del juego
+                Text(
+                    text = "Descripción:",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.height(7.dp))
+                Text(
+                    text = it.short_description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            // Si el juego no está disponible, mostrar un loading spinner
+            game ?: Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = Color.Yellow)
             }
         }
-
     }
 }
+
+

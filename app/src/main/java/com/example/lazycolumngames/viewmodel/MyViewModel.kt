@@ -36,10 +36,13 @@ class MyViewModel: ViewModel() {
     val isFavourite: StateFlow<Boolean> = _isFavourite
 
     private val _isLiked = MutableLiveData<Boolean>(false)
-    val isLiked = _isLiked
+    val isLiked: MutableLiveData<Boolean> = _isLiked
 
     private val _liked = MutableLiveData<MutableList<Juego>>()
     val liked = _liked
+
+    private val _isLikingGame = MutableLiveData<Boolean>(false)
+    val isLikingGame: MutableLiveData<Boolean> = _isLikingGame
 
 
     fun getGames() {
@@ -75,16 +78,18 @@ class MyViewModel: ViewModel() {
             }
         }
     }
-    fun likeGame(game: Juego, onComplete: () -> Unit ){
+    fun likeGame(game: Juego, onComplete: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
+            // Llama a la nueva lógica de likeGame para manejar la inserción/actualización
             repositoryRoom.likeGame(game)
-            getFavourtie()
+            getFavourtie()  // Actualiza los juegos favoritos
             withContext(Dispatchers.Main) {
                 isLiked.value = true
                 onComplete()
             }
         }
     }
+
     fun dislikeGame(game: Juego, onComplete: () -> Unit ){
         CoroutineScope(Dispatchers.IO).launch {
             repositoryRoom.dislikeGame(game)
@@ -108,6 +113,10 @@ class MyViewModel: ViewModel() {
                 currentGame.copy(is_favourite = !currentGame.is_favourite)
             }
         }
+    }
+
+    fun toggleIsLiking(){
+        this._isLikingGame.value = this._isLikingGame.value!!.not()
     }
 
 

@@ -4,6 +4,7 @@ import android.net.Uri
 
 sealed class Routes(val route: String) {
     object LazyColumnGames: Routes("LazyColumnGames")
+    object FavouriteGamesView: Routes("FavouriteGamesView")
 
    object DetailView: Routes("DetailView/{gameJson") {
        //fun createRoute(gameJson: String): String = "DetailView/${Uri.encode(gameJson)}"

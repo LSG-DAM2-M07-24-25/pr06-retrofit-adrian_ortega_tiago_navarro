@@ -12,7 +12,7 @@ interface GameDao {
     fun getFavourite() : MutableList<Juego>
 
     @Query("SELECT * FROM games WHERE title = :title ")
-    fun findByTitle (title: String)
+    fun findByTitle (title: String): MutableList<Juego?>
 
     @Query("SELECT is_favourite FROM games WHERE title = :title ")
     fun isFavourite (title: String): Boolean

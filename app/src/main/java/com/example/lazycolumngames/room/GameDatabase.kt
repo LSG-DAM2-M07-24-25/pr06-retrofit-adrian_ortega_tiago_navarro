@@ -6,6 +6,6 @@ import com.example.lazycolumngames.model.Juego
 
 @Database(entities = (arrayOf(Juego::class)), version = 1)
 
-abstract class GameDatabase {
+abstract class GameDatabase: RoomDatabase() {
     abstract fun GameDao() : GameDao
 }
