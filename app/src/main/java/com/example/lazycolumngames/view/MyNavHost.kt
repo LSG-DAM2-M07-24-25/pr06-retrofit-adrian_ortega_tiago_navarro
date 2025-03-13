@@ -18,7 +18,7 @@ fun MyNavHost(modifier: Modifier, myNavController: NavHostController, myViewMode
             LazyColumnGames(modifier, myNavController, myViewModel)
         }
         composable("FavouriteGamesView") {
-            FavouriteGamesView(myNavController, myViewModel)
+            FavouriteGamesView(modifier, myNavController, myViewModel)
         }
         composable("DetailView/{gameJson}") { backStackEntry ->
             val gameJson = backStackEntry.arguments?.getString("gameJson")

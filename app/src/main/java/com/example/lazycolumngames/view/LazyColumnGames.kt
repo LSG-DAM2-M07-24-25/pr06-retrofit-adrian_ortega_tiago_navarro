@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,6 +49,13 @@ fun LazyColumnGames(modifier: Modifier, myNavController: NavController, myViewMo
             CircularProgressIndicator(color = Color.Yellow)
         }
     } else {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            // Puedes ajustar este botón con tu propio diseño
+
+        }
         if (isTablet) {
             TabletGamesList(modifier, myNavController, juegos)
         } else {
@@ -61,6 +71,11 @@ fun PhoneGamesList(modifier: Modifier, myNavController: NavController, juegos: L
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        item{
+            Button(onClick = { myNavController.navigate("FavouriteGamesView") }) {
+                Text(text = "Ver Favoritos")
+            }
+        }
         items(juegos) { juego ->
             GameItem(game = juego, isTablet = false) {
                 val gameJson = Uri.encode(Gson().toJson(juego))
@@ -77,6 +92,11 @@ fun TabletGamesList(modifier: Modifier, myNavController: NavController, juegos: 
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        item{
+            Button(onClick = { myNavController.navigate("FavouriteGamesView") }) {
+                Text(text = "Ver Favoritos")
+            }
+        }
         items(juegos) { juego ->
             GameItem(game = juego, isTablet = true) {
                 val gameJson = Uri.encode(Gson().toJson(juego))

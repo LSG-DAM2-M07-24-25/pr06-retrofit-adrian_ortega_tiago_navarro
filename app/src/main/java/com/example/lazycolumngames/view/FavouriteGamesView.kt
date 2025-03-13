@@ -16,16 +16,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +50,7 @@ fun FavouriteGamesView(modifier: Modifier, myNavController: NavController, myVie
     val configuration = LocalConfiguration.current
     val isTablet = configuration.screenWidthDp >= 600 // Determina si el dispositivo es una tablet
     val showLoading: Boolean by myViewModel.loading.observeAsState(true) // Estado de carga
-    val juegos: List<Juego> by myViewModel.games.observeAsState(emptyList()) // Lista de juegos desde el ViewModel
+    val juegos: MutableList<Juego> by myViewModel.liked.observeAsState(mutableListOf()) // Lista de juegos desde el ViewModel
 
     myViewModel.getGames() // Obtiene los juegos
 
@@ -63,20 +66,25 @@ fun FavouriteGamesView(modifier: Modifier, myNavController: NavController, myVie
     } else {
         // Muestra la lista de juegos dependiendo si el dispositivo es una tablet o un teléfono
         if (isTablet) {
-            TabletGamesList(modifier, myNavController, juegos)
+            TabletFavourite(modifier, myNavController, juegos)
         } else {
-            PhoneGamesList(modifier, myNavController, juegos)
+            PhoneFavourite(modifier, myNavController, juegos)
         }
     }
 }
 
 @Composable
-fun PhoneGamesList(modifier: Modifier, myNavController: NavController, juegos: List<Juego>) {
+fun PhoneFavourite(modifier: Modifier, myNavController: NavController, juegos: MutableList<Juego>) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp) // Espaciado entre los ítems
     ) {
+        item{
+            Button(onClick = { myNavController.navigate("LazyColumnGames") }) {
+                Text(text = "Volver")
+            }
+        }
         items(juegos) { juego ->
             GameItem(game = juego, isTablet = false) {
                 // Navega a la vista de detalle con los datos del juego
@@ -88,12 +96,17 @@ fun PhoneGamesList(modifier: Modifier, myNavController: NavController, juegos: L
 }
 
 @Composable
-fun TabletGamesList(modifier: Modifier, myNavController: NavController, juegos: List<Juego>) {
+fun TabletFavourite(modifier: Modifier, myNavController: NavController, juegos: MutableList<Juego>) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp) // Espaciado entre los ítems
     ) {
+        item{
+            Button(onClick = { myNavController.navigate("LazyColumnGames") }) {
+                Text(text = "Volver")
+            }
+        }
         items(juegos) { juego ->
             GameItem(game = juego, isTablet = true) {
                 // Navega a la vista de detalle con los datos del juego
@@ -104,54 +117,3 @@ fun TabletGamesList(modifier: Modifier, myNavController: NavController, juegos: 
     }
 }
 
-@Composable
-fun GameItem(game: Juego, isTablet: Boolean, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick), // Maneja el clic en el juego
-        elevation = 4.dp
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Imagen del juego
-            GlideImage(
-                model = game.thumbnail,
-                contentDescription = "Game Thumbnail",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            // Información básica del juego
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = game.title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = game.short_description,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-
-            // Botón de favorito o íconos adicionales según el dispositivo
-            if (isTablet) {
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Favorite",
-                    tint = Color.Red
-                )
-            }
-        }
-    }
-}
