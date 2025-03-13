@@ -3,7 +3,7 @@ package com.example.lazycolumngames.room
 import android.app.Application
 import androidx.room.Room
 
-class GameApplication {
+class GameApplication : Application() {
     companion object {
         lateinit var database: GameDatabase
     }
