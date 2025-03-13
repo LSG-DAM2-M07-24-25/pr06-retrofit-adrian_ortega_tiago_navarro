@@ -13,7 +13,7 @@ interface GameDao {
     fun findByTitle (title: String)
 
     @Query("SELECT is_favourite FROM games WHERE title = :title ")
-    fun isFavourite (title: String)
+    fun isFavourite (title: String): Boolean
 
     @Insert
     fun likeGame(game: Juego)

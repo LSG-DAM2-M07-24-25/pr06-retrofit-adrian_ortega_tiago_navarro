@@ -35,7 +35,7 @@ class MyViewModel: ViewModel() {
     private val _isFavourite = MutableStateFlow(false)
     val isFavourite: StateFlow<Boolean> = _isFavourite
 
-    private val _isLiked = MutableLiveData(false)
+    private val _isLiked = MutableLiveData<Boolean>(false)
     val isLiked = _isLiked
 
     private val _liked = MutableLiveData<MutableList<Juego>>()
@@ -66,6 +66,16 @@ class MyViewModel: ViewModel() {
             }
         }
     }
+
+    fun isLiked(game: Juego){
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = repositoryRoom.isLiked(game.title)
+            withContext(Dispatchers.Main){
+                _isLiked.value = response
+            }
+        }
+    }
+
 
     fun setGame(gameJson: String?) {
         gameJson?.let {
