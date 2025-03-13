@@ -1,5 +1,7 @@
 package com.example.lazycolumngames.model
 
+import androidx.annotation.DrawableRes
+import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
 data class Juego(
@@ -7,12 +9,12 @@ data class Juego(
     val freetogame_profile_url: String,
     val game_url: String,
     val genre: String,
-    val id: Int,
+    @PrimaryKey val id: Int,
     val platform: String,
     val publisher: String,
     val release_date: String,
     val short_description: String,
     val thumbnail: String,
     val title: String,
-    var is_favourite: Boolean = false
+    @ColumnInfo(name = "is_favourite") var is_favourite: Boolean = false
 )

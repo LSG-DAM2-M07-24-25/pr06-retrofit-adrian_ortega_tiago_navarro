@@ -81,10 +81,13 @@ fun PhoneDetailView(game: Juego?, myViewModel: MyViewModel) {
         ) {
             Text(
                 text = game?.title ?: "Detalles",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
+
 
             )
-            IconButton(onClick = { myViewModel.toggleFavourite() }) {
+            //Spacer(Modifier.height(40.dp))
+            IconButton(onClick = { myViewModel.toggleFavourite() }, ) {
                 Icon(
                     imageVector = if (game?.is_favourite == true) Icons.Filled.Favorite else Icons.Outlined.Favorite,
                     contentDescription = "Favourite",
@@ -252,14 +255,17 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
             horizontalAlignment = Alignment.Start
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 32.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = game?.title ?: "Detalles", fontSize = MaterialTheme.typography.headlineMedium.fontSize)
+                Text(text = game?.title ?: "Detalles", fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontWeight = FontWeight.Bold)
                 IconButton(onClick = { myViewModel.toggleFavourite() }) {
                     Icon(
                         imageVector = if (game?.is_favourite == true) Icons.Filled.Favorite else Icons.Outlined.Favorite,
                         contentDescription = "Favourite",
+                        //Modifier.padding(bottom = 15.dp),
                         tint = if (game?.is_favourite == true) Color.Red else Color.Gray
                     )
                 }
@@ -348,7 +354,7 @@ fun TabletDetailView(game: Juego?, myViewModel: MyViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(
-                        text = "Descripcion: ",
+                        text = "Description: ",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )
