@@ -15,10 +15,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.lazycolumngames.room.RepositoryRoom
 
 class MyViewModel: ViewModel() {
 
     private val repository = Repository()
+
+    private val repositoryRoom = RepositoryRoom()
 
     private val _loading = MutableLiveData(true)
     val loading = _loading
@@ -31,6 +34,13 @@ class MyViewModel: ViewModel() {
 
     private val _isFavourite = MutableStateFlow(false)
     val isFavourite: StateFlow<Boolean> = _isFavourite
+
+    private val _isLiked = MutableLiveData(false)
+    val isLiked = _isLiked
+
+    private val _liked = MutableLiveData<MutableList<Juego>>()
+    val liked = _liked
+
 
     fun getGames() {
         CoroutineScope(Dispatchers.IO).launch {
