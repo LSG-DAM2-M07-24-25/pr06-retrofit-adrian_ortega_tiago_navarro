@@ -4,5 +4,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.lazycolumngames.model.Juego
 
-class GameDatabase {
+@Database(entities = (arrayOf(Juego::class)), version = 1)
+
+abstract class GameDatabase {
+    abstract fun GameDao() : GameDao
 }
