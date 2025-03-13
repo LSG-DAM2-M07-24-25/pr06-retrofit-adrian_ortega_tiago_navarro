@@ -85,8 +85,16 @@ class MyViewModel: ViewModel() {
             }
         }
     }
-
-
+    fun dislikeGame(game: Juego, onComplete: () -> Unit ){
+        CoroutineScope(Dispatchers.IO).launch {
+            repositoryRoom.dislikeGame(game)
+            getFavourtie()
+            withContext(Dispatchers.Main) {
+                isLiked.value = false
+                onComplete()
+            }
+        }
+    }
     fun setGame(gameJson: String?) {
         gameJson?.let {
             val decodedJson = Uri.decode(it)
