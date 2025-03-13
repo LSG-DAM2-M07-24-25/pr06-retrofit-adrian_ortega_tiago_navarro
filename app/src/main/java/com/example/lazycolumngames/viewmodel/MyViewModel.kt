@@ -57,6 +57,16 @@ class MyViewModel: ViewModel() {
         }
     }
 
+    fun getFavourtie(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = repositoryRoom.getFavourite()
+            withContext(Dispatchers.Main) {
+                liked.value = response
+                _loading.value = false
+            }
+        }
+    }
+
     fun setGame(gameJson: String?) {
         gameJson?.let {
             val decodedJson = Uri.decode(it)
