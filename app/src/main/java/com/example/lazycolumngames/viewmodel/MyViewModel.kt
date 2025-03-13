@@ -75,6 +75,16 @@ class MyViewModel: ViewModel() {
             }
         }
     }
+    fun likeGame(game: Juego, onComplete: () -> Unit ){
+        CoroutineScope(Dispatchers.IO).launch {
+            repositoryRoom.likeGame(game)
+            getFavourtie()
+            withContext(Dispatchers.Main) {
+                isLiked.value = true
+                onComplete()
+            }
+        }
+    }
 
 
     fun setGame(gameJson: String?) {
