@@ -21,4 +21,8 @@ interface GameDao {
     @Delete
     fun dislikeGame(game: Juego)
 
+    @Query("UPDATE games SET is_liked = :isLiked WHERE title = :title ")
+    fun updateLikedStatus(title: String, isLiked: Boolean)
+
+
 }
